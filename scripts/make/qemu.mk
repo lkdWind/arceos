@@ -16,7 +16,7 @@ else ifeq ($(ARCH), riscv64)
   machine := virt
 else ifeq ($(ARCH), aarch64)
   ifeq ($(PLAT_NAME), aarch64-raspi4)
-    machine := raspi4b
+    machine := orangepi-pc
     override MEM := 2G
   else
     machine := virt
@@ -80,6 +80,14 @@ qemu_args-$(GRAPHIC) += \
 
 ifeq ($(GRAPHIC), n)
   qemu_args-y += -nographic
+endif
+
+ifeq ($(ARCH), aarch64)Add commentMore actions
+  ifeq ($(GICV3),y)
+    qemu_args-y += -machine gic-version=3
+  else
+    qemu_args-y += -machine gic-version=2
+  endif
 endif
 
 ifeq ($(QEMU_LOG), y)
