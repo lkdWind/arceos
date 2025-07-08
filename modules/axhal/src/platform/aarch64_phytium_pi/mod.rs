@@ -9,6 +9,7 @@ pub mod irq {
 }
 
 pub mod console {
+    pub use super::pl011 as phyt_pl011;
     pub use crate::platform::aarch64_common::pl011::*;
 }
 
@@ -56,8 +57,8 @@ pub fn platform_init() {
     #[cfg(feature = "irq")]
     super::aarch64_common::gic::init_primary();
     super::aarch64_common::generic_timer::init_percpu();
-    super::aarch64_common::pl011::init();
-    super::wdt::wdt_init();
+    // super::aarch64_common::pl011::init();
+    // super::wdt::wdt_init();
 }
 
 /// Initializes the platform devices for secondary CPUs.
@@ -75,3 +76,4 @@ fn cpu_hard_id_to_logic_id(hard_id: usize) -> usize {
         .unwrap()
 }
 pub mod wdt;
+pub mod pl011;
